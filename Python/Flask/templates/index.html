@@ -70,13 +70,24 @@
   <div class="col-md-4">
     <p>There's more going on
     at the <a href="{{ request.script_root }}/form"
-    >Entry Form</a> and the <a href="{{ request.script_root }}/display">
+    >Entry Form</a> and the <a href="{{ request.script_root }}/display">display</a>.
     
     </p>
   </div> <!-- column -->
   </div> <!-- row -->
 
 
+  {% if session.rant is defined %}
+  <div class="row">
+  <div class="col-md-8">
+  <p>Haha, not really static, but I can't save your rant 
+    permanently because I haven't integrated a database yet.
+    You said: 
+    {{ session.rant }}.
+  </p>   
+  </div> <!-- column -->
+  </div> <!-- row -->
+  {% endif %}
 
  </div> <!-- container -->
 </body> </html>
