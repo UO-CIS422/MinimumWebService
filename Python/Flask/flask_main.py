@@ -7,7 +7,8 @@ import flask    # The basic framework for http requests, storing cookies, etc
 import logging  # For monitoring and debugging
 
 # Our own modules
-#  (none yet)
+from db.db_sqlite import write_rant, read_rants
+import arrow
 
 ###
 # Globals
@@ -40,6 +41,12 @@ def index():
 def form():
     return flask.render_template('form.html')
 
+@app.route("/display")
+def display():
+    flask.g.rants = read_rants()
+    return flask.render_template('display.html')
+
+
 #################
 # Handle a form, then redirect back to the
 # index page
@@ -47,7 +54,9 @@ def form():
 @app.route("/_ranted", methods=['POST'])
 def ranted():
   app.logger.debug("Ranted: |{}|".format(flask.request.form))
-  flask.session["rant"] = flask.request.form["rant"]  # global but temporary
+  rant = flask.request.form["rant"]
+  write_rant(rant)
+  flask.session["rant"] = rant
   return flask.redirect(flask.url_for('index'))
 
 ###################
@@ -65,8 +74,8 @@ def error_500(e):
   assert app.debug == False  ## Crash me please, so I can debug! 
   return flask.render_template('500.html'), 500
 
-@app.errorhandler(400)
-def error_400(e):
+@app.errorhandler(403)
+def error_403(e):
   app.logger.warning("++ 403 error: {}".format(e))
   return flask.render_template('403.html'), 403
 
@@ -85,8 +94,14 @@ def error_400(e):
 #   return jsonify(result={ "words": " ".join(matches) })
 
 #############
-
-
+# Filters
+# These process some text before inserting into a page
+#############
+@app.template_filter('humanize')
+def humanize(date):
+    """Humanize an ISO date string"""
+    as_arrow = arrow.get(date)
+    return as_arrow.humanize()
 
 # Set up to run from cgi-bin script, from
 # gunicorn, or stand-alone.

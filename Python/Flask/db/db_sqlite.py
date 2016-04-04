@@ -39,6 +39,7 @@ def read_rants():
     c = conn.cursor()
     c.execute("SELECT * FROM rants")
     result = c.fetchall()
+    result = map(lambda item: { "when": item[0], "text": item[1] }, result)
     #  Warning: 'fetchmany()' may return just one row! 
     conn.close()
     return result
