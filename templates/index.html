@@ -11,7 +11,7 @@
   documentation  (scroll down past the installation directions). 
 
   I'm also loading the jquery library.  It is mostly useful for
-  doing 'ajax' interaction, which I am not (yet) demonstrating here. 
+  doing 'ajax' interaction, which I am not (yet) demonstrating here.
 -->
 
 <!-- Bootstrap requires the following three meta tags to appear first -->
@@ -80,11 +80,14 @@
   {% if session.rant is defined %}
   <div class="row">
   <div class="col-md-8">
-  <p>Haha, not really static, but I can't save your rant 
-    permanently because I haven't integrated a database yet.
+  <p>Haha, not entirely static. I at least recalled your rant.
     You said: 
     {{ session.rant }}.
-  </p>   
+  </p>
+      <p>I kept that in a cookie.  That's what the 'session'
+      object in Flask is.  Cookies are small; don't try to put
+          too much in them.
+      </p>
   </div> <!-- column -->
   </div> <!-- row -->
   {% endif %}
