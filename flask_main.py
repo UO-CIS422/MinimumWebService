@@ -1,14 +1,12 @@
 """
 Simple Flask web site 
 """
+from db.db_sqlite import write_rant, read_rants
 
 import flask    # The basic framework for http requests, storing cookies, etc
-
+import arrow    # Date conversions
 import logging  # For monitoring and debugging
 
-# Our own modules
-from db.db_sqlite import write_rant, read_rants
-import arrow
 
 ###
 # Globals
@@ -110,10 +108,9 @@ if __name__ == "__main__":
     # Running standalone
     print("Opening for global access on port {}".format(CONFIG.PORT))
     app.run(port=CONFIG.PORT, host="0.0.0.0")
-else:
-    # Running from cgi-bin or from gunicorn WSGI server, 
-    # which makes the call to app.run.  Gunicorn may invoke more than
-    # one instance for concurrent service. 
-    pass
 
+# We could also be running from the gunicorn WSGI server,
+# which makes the call to app.run.  Gunicorn may invoke more than
+# one instance for concurrent service, so make sure the application
+# is thread safe!
 

@@ -3,14 +3,15 @@ Initialize an SQLite database
 in the db directory.
 File name is "sqlite.db".
 
-Designed to be invoked from one level up, i.e.,
-run 'python3 db/initdb-sqlite.db' from the
-main Flask directory.
+Must be invoked from this level,
+'python3 initdb-sqlite.db', not from
+one level up, because of relative file path.
 
 M Young, April 2016 for CIS 422
+Revised October 2020 for CIS 422
 """
 
-DBFILE = "db/sqlite.db"
+DBFILE = "sqlite.db"
 
 import arrow  # Date-Time module, better than the built-in datetime
 
