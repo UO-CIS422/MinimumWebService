@@ -39,10 +39,10 @@ test:	env CONFIG.py
 # isn't too busy.  The Flask object is where the request is actually handled.
 #
 run:	env CONFIG.py
-	(. env/bin/activate; gunicorn -b 0.0.0.0:$(GUPORT) flask_main:app) &
+	(. env/bin/activate; nohup gunicorn -b 0.0.0.0:$(GUPORT) flask_main:app &)
 
 env:
-	build
+	install
 
 CONFIG.py:  CONFIG.base.py
 	echo "Warning: Copying CONFIG.py from base version; it may need editing"

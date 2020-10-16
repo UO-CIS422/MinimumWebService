@@ -78,19 +78,6 @@ def error_403(e):
   return flask.render_template('403.html'), 403
 
 
-###############
-# AJAX request handlers 
-#   These return JSON, rather than rendering pages. 
-#   (Currently none, leaving this here as an example)
-###############
-# @app.route("/_check")
-# def _check():
-#   tray = request.args.get("tray", "", type=str)
-#   pattern = request.args.get("pattern", "XXX", type=str)
-#   matches = find.search(WORDS, pattern, tray)
-#   ### Matches returns a list of words
-#   return jsonify(result={ "words": " ".join(matches) })
-
 #############
 # Filters
 # These process some text before inserting into a page
